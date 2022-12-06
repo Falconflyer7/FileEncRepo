@@ -1,8 +1,6 @@
 package examples;
 
-import java.io.BufferedInputStream;
 import java.io.FileInputStream;
-import java.io.FileNotFoundException;
 import java.io.FileOutputStream;
 import java.io.IOException;
 import java.io.InputStream;
@@ -22,7 +20,7 @@ import javax.crypto.SecretKey;
 import javax.crypto.SecretKeyFactory;
 import javax.crypto.spec.DESKeySpec;
 
-public class FileEnc2 implements IEncryptionFramework, IEncryptionInterface{
+public class FileEnc2 extends AbstractEncryptionFramework{
 
 	public void encrypt(String key, InputStream is, OutputStream os) throws Throwable {
 		encryptOrDecrypt(key, Cipher.ENCRYPT_MODE, is, os);
@@ -147,44 +145,5 @@ public class FileEnc2 implements IEncryptionFramework, IEncryptionInterface{
 
 		return false;
 	}
-	//	public boolean contentEquals(FileInputStream input1, FileInputStream input2) throws IOException
-	//	  {
-	//		input1 = new BufferedInputStream(input1);
-	//		input2 = new BufferedInputStream(input2);
-	//	    int ch = input1.read();
-	//	    while (-1 != ch)
-	//	    {
-	//	      int ch2 = input2.read();
-	//	      if (ch != ch2)
-	//	      {
-	//	        return false;
-	//	      }
-	//	      ch = input1.read();
-	//	    }
-	//
-	//	    int ch2 = input2.read();
-	//	    return (ch2 == -1);
-	//	  }
-	//	
-	public long filesCompareByByte(Path path1, Path path2) throws IOException {
-		try (BufferedInputStream fis1 = new BufferedInputStream(new FileInputStream(path1.toFile()));
-				BufferedInputStream fis2 = new BufferedInputStream(new FileInputStream(path2.toFile()))) {
-
-			int ch = 0;
-			long pos = 1;
-			while ((ch = fis1.read()) != -1) {
-				if (ch != fis2.read()) {
-					return pos;
-				}
-				pos++;
-			}
-			if (fis2.read() == -1) {
-				return -1;
-			}
-			else {
-				return pos;
-			}
-		}
-	}
-
+	
 }

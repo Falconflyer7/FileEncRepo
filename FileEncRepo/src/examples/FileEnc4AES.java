@@ -1,6 +1,5 @@
 package examples;
 
-import java.io.BufferedInputStream;
 import java.io.File;
 import java.io.FileInputStream;
 import java.io.FileOutputStream;
@@ -18,7 +17,7 @@ import javax.crypto.IllegalBlockSizeException;
 import javax.crypto.NoSuchPaddingException;
 import javax.crypto.spec.SecretKeySpec;
 
-public class FileEnc4AES implements IEncryptionFramework, IEncryptionInterface{
+public class FileEnc4AES extends AbstractEncryptionFramework{
 
 	public void encryptedFile(String secretKey, String fileInputPath, String fileOutPath)
 			throws NoSuchAlgorithmException, NoSuchPaddingException, InvalidKeyException, IOException,
@@ -148,24 +147,5 @@ public class FileEnc4AES implements IEncryptionFramework, IEncryptionInterface{
 		
 		return false;
 	}
-	public long filesCompareByByte(Path path1, Path path2) throws IOException {
-	    try (BufferedInputStream fis1 = new BufferedInputStream(new FileInputStream(path1.toFile()));
-	            BufferedInputStream fis2 = new BufferedInputStream(new FileInputStream(path2.toFile()))) {
-	           
-	           int ch = 0;
-	           long pos = 1;
-	           while ((ch = fis1.read()) != -1) {
-	               if (ch != fis2.read()) {
-	                   return pos;
-	               }
-	               pos++;
-	           }
-	           if (fis2.read() == -1) {
-	               return -1;
-	           }
-	           else {
-	               return pos;
-	           }
-	       }
-	   }
+	
 }
