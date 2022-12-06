@@ -26,8 +26,14 @@ public class TestMain {
 		ciphers.add(new FileEnc5DES());
 		ciphers.add(new FileEnc4AES());
 		
+		
 		for (IEncryptionFramework cipher : ciphers) {
-			cipher.run(key, "original.txt", "encrypted.txt", "decrypted.txt");
+			
+			System.out.println("Running " + cipher.encryptionType());
+			long duration = cipher.runEnc(key, "original.txt", "encrypted.txt", "decrypted.txt");
+			System.out.println("Encrypt Runtime " + duration);
+			duration = cipher.runDec(key, "original.txt", "encrypted.txt", "decrypted.txt");
+			System.out.println("Decrypt Runtime " + duration);
 		}
 		
 		

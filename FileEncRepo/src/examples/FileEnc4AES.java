@@ -68,7 +68,8 @@ public class FileEnc4AES implements IEncryptionFramework, IEncryptionInterface{
 	}
 
 	@Override
-	public void run(String key, String inputFile, String encryptedFile, String decryptedFile) {
+	public long run(String key, String inputFile, String encryptedFile, String decryptedFile) {
+		long startTime = System.nanoTime();
 		try {
 			encryptedFile(key, inputFile, encryptedFile);
 			decryptedFile(key, encryptedFile, decryptedFile);
@@ -77,6 +78,8 @@ public class FileEnc4AES implements IEncryptionFramework, IEncryptionInterface{
 			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
+		long endTime = System.nanoTime();
+		return endTime - startTime;
 
 	}
 
@@ -90,5 +93,39 @@ public class FileEnc4AES implements IEncryptionFramework, IEncryptionInterface{
 	public void decrypt(String key, InputStream is, OutputStream os) throws Throwable {
 		// TODO Auto-generated method stub
 		
+	}
+
+	@Override
+	public String encryptionType() {
+		// TODO Auto-generated method stub
+		return "AES implementation 1";
+	}
+
+	@Override
+	public long runEnc(String key, String inputFile, String encryptedFile, String decryptedFile) {
+		long startTime = System.nanoTime();
+		try {
+			encryptedFile(key, inputFile, encryptedFile);
+		} catch (InvalidKeyException | NoSuchAlgorithmException | NoSuchPaddingException | IllegalBlockSizeException
+				| BadPaddingException | IOException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		long endTime = System.nanoTime();
+		return endTime - startTime;
+	}
+
+	@Override
+	public long runDec(String key, String inputFile, String encryptedFile, String decryptedFile) {
+		long startTime = System.nanoTime();
+		try {
+			decryptedFile(key, encryptedFile, decryptedFile);
+		} catch (InvalidKeyException | NoSuchAlgorithmException | NoSuchPaddingException | IllegalBlockSizeException
+				| BadPaddingException | IOException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		long endTime = System.nanoTime();
+		return endTime - startTime;
 	}
 }

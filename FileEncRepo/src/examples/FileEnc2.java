@@ -58,7 +58,8 @@ public class FileEnc2 implements IEncryptionFramework, IEncryptionInterface{
 	}
 
 	@Override
-	public void run(String key, String inputFile, String encryptedFile, String decryptedFile) {
+	public long run(String key, String inputFile, String encryptedFile, String decryptedFile) {
+		long startTime = System.nanoTime();
 		try {
 			FileInputStream fis = new FileInputStream(inputFile);
 			FileOutputStream fos = new FileOutputStream(encryptedFile);
@@ -70,7 +71,8 @@ public class FileEnc2 implements IEncryptionFramework, IEncryptionInterface{
 		} catch (Throwable e) {
 			e.printStackTrace();
 		}
-		
+		long endTime = System.nanoTime();
+		return endTime - startTime;
 	}
 
 	@Override
@@ -87,5 +89,40 @@ public class FileEnc2 implements IEncryptionFramework, IEncryptionInterface{
 			IllegalBlockSizeException, BadPaddingException {
 		// TODO Auto-generated method stub
 		
+	}
+
+	@Override
+	public String encryptionType() {
+		// TODO Auto-generated method stub
+		return "DES implementation 1";
+	}
+
+	@Override
+	public long runEnc(String key, String inputFile, String encryptedFile, String decryptedFile) {
+		long startTime = System.nanoTime();
+		try {
+			FileInputStream fis = new FileInputStream(inputFile);
+			FileOutputStream fos = new FileOutputStream(encryptedFile);
+			encrypt(key, fis, fos);
+
+		} catch (Throwable e) {
+			e.printStackTrace();
+		}
+		long endTime = System.nanoTime();
+		return endTime - startTime;
+	}
+
+	@Override
+	public long runDec(String key, String inputFile, String encryptedFile, String decryptedFile) {
+		long startTime = System.nanoTime();
+		try {
+			FileInputStream fis2 = new FileInputStream(encryptedFile);
+			FileOutputStream fos2 = new FileOutputStream(decryptedFile);
+			decrypt(key, fis2, fos2);
+		} catch (Throwable e) {
+			e.printStackTrace();
+		}
+		long endTime = System.nanoTime();
+		return endTime - startTime;
 	}
 }

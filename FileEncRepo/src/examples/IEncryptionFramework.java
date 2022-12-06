@@ -2,6 +2,12 @@ package examples;
 
 public interface IEncryptionFramework {
 
-	void run(String key, String inputFile, String encryptedFile, String decryptedFile);
+	long run(String key, String inputFile, String encryptedFile, String decryptedFile);
+	long runEnc(String key, String inputFile, String encryptedFile, String decryptedFile);
+	long runDec(String key, String inputFile, String encryptedFile, String decryptedFile);
 	
+	
+	String encryptionType();
+
+
 }
