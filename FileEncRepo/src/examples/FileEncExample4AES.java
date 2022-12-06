@@ -17,19 +17,6 @@ import javax.crypto.spec.SecretKeySpec;
 
 public class FileEncExample4AES implements IEncryptionFramework, IEncryptionInterface{
 
-//	public static void main(String[] args) throws NoSuchAlgorithmException, NoSuchPaddingException, InvalidKeyException,
-//	IllegalBlockSizeException, BadPaddingException, IOException {
-//		var key = "markrutorial.com";
-//
-//		System.out.println("File input: " + "original.txt");
-//
-//		//encryptedFile
-//		encryptedFile(key, "original.txt", "encrypted.txt");
-//
-//		//decryptedFile
-//		decryptedFile(key, "encrypted.txt", "decrypted.txt");
-//	}
-
 	public void encryptedFile(String secretKey, String fileInputPath, String fileOutPath)
 			throws NoSuchAlgorithmException, NoSuchPaddingException, InvalidKeyException, IOException,
 			IllegalBlockSizeException, BadPaddingException {
