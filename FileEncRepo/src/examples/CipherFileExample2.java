@@ -13,7 +13,7 @@ import javax.crypto.SecretKey;
 import javax.crypto.SecretKeyFactory;
 import javax.crypto.spec.DESKeySpec;
 
-public class CipherFileExample2 implements IEncryptionInterface{
+public class CipherFileExample2 implements IEncryptionFramework{
 
 	public static void main(String[] args) {
 		try {

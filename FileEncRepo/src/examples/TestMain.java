@@ -5,6 +5,8 @@ import java.io.FileOutputStream;
 import java.io.IOException;
 import java.security.InvalidKeyException;
 import java.security.NoSuchAlgorithmException;
+import java.util.LinkedList;
+import java.util.List;
 
 import javax.crypto.BadPaddingException;
 import javax.crypto.IllegalBlockSizeException;
@@ -21,12 +23,23 @@ public class TestMain {
 		//		main.example2();
 		//		main.example4();
 		//		main.example5();
-		IEncryptionInterface framework = new CipherFileExample2();
-		framework.run(key, "original.txt", "encrypted.txt", "decrypted.txt");
-		framework = new FileEncExample5DES();
-		framework.run(key, "original.txt", "encrypted.txt", "decrypted.txt");
-		framework = new FileEncExample4AES();
-		framework.run(key, "original.txt", "encrypted.txt", "decrypted.txt");
+		
+		List <IEncryptionFramework> ciphers = new LinkedList<>();
+		ciphers.add(new CipherFileExample2());
+		ciphers.add(new FileEncExample5DES());
+		ciphers.add(new FileEncExample4AES());
+		
+		for (IEncryptionFramework cipher : ciphers) {
+			cipher.run(key, "original.txt", "encrypted.txt", "decrypted.txt");
+		}
+		
+		
+//		IEncryptionInterface framework = new CipherFileExample2();
+//		framework.run(key, "original.txt", "encrypted.txt", "decrypted.txt");
+//		framework = new FileEncExample5DES();
+//		framework.run(key, "original.txt", "encrypted.txt", "decrypted.txt");
+//		framework = new FileEncExample4AES();
+//		framework.run(key, "original.txt", "encrypted.txt", "decrypted.txt");
 		//		main.runE2(key, "original.txt", "encrypted.txt", "decrypted.txt");
 		//		main.runE4(key, "original.txt", "encrypted.txt", "decrypted.txt");
 		//		main.runE5(key, "original.txt", "encrypted.txt", "decrypted.txt");

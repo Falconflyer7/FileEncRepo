@@ -13,7 +13,7 @@ import javax.crypto.SecretKey;
 import javax.crypto.SecretKeyFactory;
 import javax.crypto.spec.DESKeySpec;
 
-public class FileEncExample5DES implements IEncryptionInterface{
+public class FileEncExample5DES implements IEncryptionFramework{
 
 	public static void main(String[] args) {
 //		try {
