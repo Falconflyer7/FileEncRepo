@@ -1,5 +1,9 @@
 package examples;
 
+import java.io.FileInputStream;
+import java.io.FileNotFoundException;
+import java.io.FileOutputStream;
+
 public class CaesarCipher {
 	public static void main(String...s){
 		CaesarCipher main = new CaesarCipher();
@@ -73,5 +77,24 @@ public class CaesarCipher {
 		}
 
 		System.out.println("Decrypted Message = " + decryptedMessage);
+	}
+	
+	public long runEnc(String key, String inputFile, String encryptedFile) {
+		long startTime = System.nanoTime();
+		try {
+			FileInputStream fis = new FileInputStream(inputFile);
+			FileOutputStream fos = new FileOutputStream(encryptedFile);
+			encrypt(key, fis, fos);
+
+		} catch (Throwable e) {
+			e.printStackTrace();
+		}
+		long endTime = System.nanoTime();
+		return endTime - startTime;
+	}
+
+	private void encrypt(String key, FileInputStream fis, FileOutputStream fos) {
+		// TODO Auto-generated method stub
+		
 	}
 }
