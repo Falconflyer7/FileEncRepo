@@ -22,9 +22,9 @@ public class TestMain {
 		TestMain main = new TestMain();
 		
 		List <IEncryptionFramework> ciphers = new LinkedList<>();
-		ciphers.add(new CipherFileExample2());
-		ciphers.add(new FileEncExample5DES());
-		ciphers.add(new FileEncExample4AES());
+		ciphers.add(new FileEnc2());
+		ciphers.add(new FileEnc5DES());
+		ciphers.add(new FileEnc4AES());
 		
 		for (IEncryptionFramework cipher : ciphers) {
 			cipher.run(key, "original.txt", "encrypted.txt", "decrypted.txt");

@@ -18,7 +18,7 @@ import javax.crypto.SecretKey;
 import javax.crypto.SecretKeyFactory;
 import javax.crypto.spec.DESKeySpec;
 
-public class CipherFileExample2 implements IEncryptionFramework, IEncryptionInterface{
+public class FileEnc2 implements IEncryptionFramework, IEncryptionInterface{
 
 	public void encrypt(String key, InputStream is, OutputStream os) throws Throwable {
 		encryptOrDecrypt(key, Cipher.ENCRYPT_MODE, is, os);

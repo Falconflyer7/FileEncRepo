@@ -13,7 +13,7 @@ import javax.crypto.SecretKey;
 import javax.crypto.SecretKeyFactory;
 import javax.crypto.spec.DESKeySpec;
 
-public class CipherFileExample {
+public class FileEnc1 {
   public static void main(String args[]) throws Exception {
     KeyGenerator kg = KeyGenerator.getInstance("DES");
     kg.init(new SecureRandom());

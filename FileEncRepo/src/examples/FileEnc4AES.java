@@ -15,7 +15,7 @@ import javax.crypto.IllegalBlockSizeException;
 import javax.crypto.NoSuchPaddingException;
 import javax.crypto.spec.SecretKeySpec;
 
-public class FileEncExample4AES implements IEncryptionFramework, IEncryptionInterface{
+public class FileEnc4AES implements IEncryptionFramework, IEncryptionInterface{
 
 	public void encryptedFile(String secretKey, String fileInputPath, String fileOutPath)
 			throws NoSuchAlgorithmException, NoSuchPaddingException, InvalidKeyException, IOException,
