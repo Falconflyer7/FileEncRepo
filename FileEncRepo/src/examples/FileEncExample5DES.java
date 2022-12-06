@@ -13,7 +13,7 @@ import javax.crypto.SecretKey;
 import javax.crypto.SecretKeyFactory;
 import javax.crypto.spec.DESKeySpec;
 
-public class FileEncExample5DES {
+public class FileEncExample5DES implements IEncryptionInterface{
 
 	public static void main(String[] args) {
 //		try {
@@ -66,6 +66,23 @@ public class FileEncExample5DES {
 		os.flush();
 		os.close();
 		is.close();
+	}
+
+	@Override
+	public void run(String key, String inputFile, String encryptedFile, String decryptedFile) {
+		try {
+
+			FileInputStream fis = new FileInputStream(inputFile);
+			FileOutputStream fos = new FileOutputStream(encryptedFile);
+			FileEncExample5DES.encrypt(key, fis, fos);
+
+			FileInputStream fis2 = new FileInputStream(encryptedFile);
+			FileOutputStream fos2 = new FileOutputStream(decryptedFile);
+			FileEncExample5DES.decrypt(key, fis2, fos2);
+		} catch (Throwable e) {
+			e.printStackTrace();
+		}
+		
 	}
 
 }

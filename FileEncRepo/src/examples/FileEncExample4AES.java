@@ -13,68 +13,81 @@ import javax.crypto.IllegalBlockSizeException;
 import javax.crypto.NoSuchPaddingException;
 import javax.crypto.spec.SecretKeySpec;
 
-public class FileEncExample4AES {
+public class FileEncExample4AES implements IEncryptionInterface{
 
- public static void main(String[] args) throws NoSuchAlgorithmException, NoSuchPaddingException, InvalidKeyException,
-   IllegalBlockSizeException, BadPaddingException, IOException {
-  var key = "markrutorial.com";
-  
-  System.out.println("File input: " + "original.txt");
+	public static void main(String[] args) throws NoSuchAlgorithmException, NoSuchPaddingException, InvalidKeyException,
+	IllegalBlockSizeException, BadPaddingException, IOException {
+		var key = "markrutorial.com";
 
-  //encryptedFile
-  encryptedFile(key, "original.txt", "encrypted.txt");
-  
-  //decryptedFile
-  decryptedFile(key, "encrypted.txt", "decrypted.txt");
- }
+		System.out.println("File input: " + "original.txt");
 
- public static void encryptedFile(String secretKey, String fileInputPath, String fileOutPath)
-   throws NoSuchAlgorithmException, NoSuchPaddingException, InvalidKeyException, IOException,
-   IllegalBlockSizeException, BadPaddingException {
-  var key = new SecretKeySpec(secretKey.getBytes(), "AES");
-  var cipher = Cipher.getInstance("AES");
-  cipher.init(Cipher.ENCRYPT_MODE, key);
+		//encryptedFile
+		encryptedFile(key, "original.txt", "encrypted.txt");
 
-  var fileInput = new File(fileInputPath);
-  var inputStream = new FileInputStream(fileInput);
-  var inputBytes = new byte[(int) fileInput.length()];
-  inputStream.read(inputBytes);
+		//decryptedFile
+		decryptedFile(key, "encrypted.txt", "decrypted.txt");
+	}
 
-  var outputBytes = cipher.doFinal(inputBytes);
+	public static void encryptedFile(String secretKey, String fileInputPath, String fileOutPath)
+			throws NoSuchAlgorithmException, NoSuchPaddingException, InvalidKeyException, IOException,
+			IllegalBlockSizeException, BadPaddingException {
+		var key = new SecretKeySpec(secretKey.getBytes(), "AES");
+		var cipher = Cipher.getInstance("AES");
+		cipher.init(Cipher.ENCRYPT_MODE, key);
 
-  var fileEncryptOut = new File(fileOutPath);
-  var outputStream = new FileOutputStream(fileEncryptOut);
-  outputStream.write(outputBytes);
+		var fileInput = new File(fileInputPath);
+		var inputStream = new FileInputStream(fileInput);
+		var inputBytes = new byte[(int) fileInput.length()];
+		inputStream.read(inputBytes);
 
-  inputStream.close();
-  outputStream.close();
-  
-  System.out.println("File successfully encrypted!");
-  System.out.println("New File: " + fileOutPath);
- }
+		var outputBytes = cipher.doFinal(inputBytes);
 
- public static void decryptedFile(String secretKey, String fileInputPath, String fileOutPath)
-   throws NoSuchAlgorithmException, NoSuchPaddingException, InvalidKeyException, IOException,
-   IllegalBlockSizeException, BadPaddingException {
-  var key = new SecretKeySpec(secretKey.getBytes(), "AES");
-  var cipher = Cipher.getInstance("AES");
-  cipher.init(Cipher.DECRYPT_MODE, key);
+		var fileEncryptOut = new File(fileOutPath);
+		var outputStream = new FileOutputStream(fileEncryptOut);
+		outputStream.write(outputBytes);
 
-  var fileInput = new File(fileInputPath);
-  var inputStream = new FileInputStream(fileInput);
-  var inputBytes = new byte[(int) fileInput.length()];
-  inputStream.read(inputBytes);
+		inputStream.close();
+		outputStream.close();
 
-  byte[] outputBytes = cipher.doFinal(inputBytes);
+		System.out.println("File successfully encrypted!");
+		System.out.println("New File: " + fileOutPath);
+	}
 
-  var fileEncryptOut = new File(fileOutPath);
-  var outputStream = new FileOutputStream(fileEncryptOut);
-  outputStream.write(outputBytes);
+	public static void decryptedFile(String secretKey, String fileInputPath, String fileOutPath)
+			throws NoSuchAlgorithmException, NoSuchPaddingException, InvalidKeyException, IOException,
+			IllegalBlockSizeException, BadPaddingException {
+		var key = new SecretKeySpec(secretKey.getBytes(), "AES");
+		var cipher = Cipher.getInstance("AES");
+		cipher.init(Cipher.DECRYPT_MODE, key);
 
-  inputStream.close();
-  outputStream.close();
-  
-  System.out.println("File successfully decrypted!");
-  System.out.println("New File: " + fileOutPath);
- }
+		var fileInput = new File(fileInputPath);
+		var inputStream = new FileInputStream(fileInput);
+		var inputBytes = new byte[(int) fileInput.length()];
+		inputStream.read(inputBytes);
+
+		byte[] outputBytes = cipher.doFinal(inputBytes);
+
+		var fileEncryptOut = new File(fileOutPath);
+		var outputStream = new FileOutputStream(fileEncryptOut);
+		outputStream.write(outputBytes);
+
+		inputStream.close();
+		outputStream.close();
+
+		System.out.println("File successfully decrypted!");
+		System.out.println("New File: " + fileOutPath);
+	}
+
+	@Override
+	public void run(String key, String inputFile, String encryptedFile, String decryptedFile) {
+		try {
+			encryptedFile(key, inputFile, encryptedFile);
+			decryptedFile(key, encryptedFile, decryptedFile);
+		} catch (InvalidKeyException | NoSuchAlgorithmException | NoSuchPaddingException | IllegalBlockSizeException
+				| BadPaddingException | IOException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+
+	}
 }
