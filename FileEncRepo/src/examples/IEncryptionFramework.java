@@ -10,5 +10,6 @@ public interface IEncryptionFramework {
 	String encryptionType();
 
 	boolean decryptSuccess (String inputFile, String decryptedFile);
+	long fileSize(String inputFile);
 
 }

@@ -34,9 +34,18 @@ public class TestMain {
 			System.out.println("Decrypt Runtime: " + duration);
 			boolean decryptSuccess = cipher.decryptSuccess("original.txt", "decrypted.txt");
 			System.out.println("Encrypt/decrypt success: " + decryptSuccess);
+			
+			long bytes = cipher.fileSize("encrypted.txt");
+			System.out.println("File Size for encryption: ");
+			System.out.println(String.format("%,d bytes", bytes));
+            System.out.println(String.format("%,d kilobytes", bytes / 1024));
+            bytes = cipher.fileSize("decrypted.txt");
+            System.out.println("File Size for decrypted: ");
+            System.out.println(String.format("%,d bytes", bytes));
+            System.out.println(String.format("%,d kilobytes", bytes / 1024));
 			System.out.println();
+
 		}
-		
 		
 	}
 }
