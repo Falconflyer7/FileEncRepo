@@ -4,6 +4,8 @@ import java.io.File;
 import java.io.FileInputStream;
 import java.io.FileOutputStream;
 import java.io.IOException;
+import java.io.InputStream;
+import java.io.OutputStream;
 import java.security.InvalidKeyException;
 import java.security.NoSuchAlgorithmException;
 
@@ -13,22 +15,22 @@ import javax.crypto.IllegalBlockSizeException;
 import javax.crypto.NoSuchPaddingException;
 import javax.crypto.spec.SecretKeySpec;
 
-public class FileEncExample4AES implements IEncryptionFramework{
+public class FileEncExample4AES implements IEncryptionFramework, IEncryptionInterface{
 
-	public static void main(String[] args) throws NoSuchAlgorithmException, NoSuchPaddingException, InvalidKeyException,
-	IllegalBlockSizeException, BadPaddingException, IOException {
-		var key = "markrutorial.com";
+//	public static void main(String[] args) throws NoSuchAlgorithmException, NoSuchPaddingException, InvalidKeyException,
+//	IllegalBlockSizeException, BadPaddingException, IOException {
+//		var key = "markrutorial.com";
+//
+//		System.out.println("File input: " + "original.txt");
+//
+//		//encryptedFile
+//		encryptedFile(key, "original.txt", "encrypted.txt");
+//
+//		//decryptedFile
+//		decryptedFile(key, "encrypted.txt", "decrypted.txt");
+//	}
 
-		System.out.println("File input: " + "original.txt");
-
-		//encryptedFile
-		encryptedFile(key, "original.txt", "encrypted.txt");
-
-		//decryptedFile
-		decryptedFile(key, "encrypted.txt", "decrypted.txt");
-	}
-
-	public static void encryptedFile(String secretKey, String fileInputPath, String fileOutPath)
+	public void encryptedFile(String secretKey, String fileInputPath, String fileOutPath)
 			throws NoSuchAlgorithmException, NoSuchPaddingException, InvalidKeyException, IOException,
 			IllegalBlockSizeException, BadPaddingException {
 		var key = new SecretKeySpec(secretKey.getBytes(), "AES");
@@ -53,7 +55,7 @@ public class FileEncExample4AES implements IEncryptionFramework{
 		System.out.println("New File: " + fileOutPath);
 	}
 
-	public static void decryptedFile(String secretKey, String fileInputPath, String fileOutPath)
+	public void decryptedFile(String secretKey, String fileInputPath, String fileOutPath)
 			throws NoSuchAlgorithmException, NoSuchPaddingException, InvalidKeyException, IOException,
 			IllegalBlockSizeException, BadPaddingException {
 		var key = new SecretKeySpec(secretKey.getBytes(), "AES");
@@ -89,5 +91,17 @@ public class FileEncExample4AES implements IEncryptionFramework{
 			e.printStackTrace();
 		}
 
+	}
+
+	@Override
+	public void encrypt(String key, InputStream is, OutputStream os) throws Throwable {
+		// TODO Auto-generated method stub
+		
+	}
+
+	@Override
+	public void decrypt(String key, InputStream is, OutputStream os) throws Throwable {
+		// TODO Auto-generated method stub
+		
 	}
 }

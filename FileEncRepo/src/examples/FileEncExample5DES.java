@@ -5,37 +5,42 @@ import java.io.FileOutputStream;
 import java.io.IOException;
 import java.io.InputStream;
 import java.io.OutputStream;
+import java.security.InvalidKeyException;
+import java.security.NoSuchAlgorithmException;
 
+import javax.crypto.BadPaddingException;
 import javax.crypto.Cipher;
 import javax.crypto.CipherInputStream;
 import javax.crypto.CipherOutputStream;
+import javax.crypto.IllegalBlockSizeException;
+import javax.crypto.NoSuchPaddingException;
 import javax.crypto.SecretKey;
 import javax.crypto.SecretKeyFactory;
 import javax.crypto.spec.DESKeySpec;
 
-public class FileEncExample5DES implements IEncryptionFramework{
+public class FileEncExample5DES implements IEncryptionFramework, IEncryptionInterface{
 
-	public static void main(String[] args) {
-//		try {
-//			String key = "squirrel123"; // needs to be at least 8 characters for DES
-//
-//			FileInputStream fis = new FileInputStream("original.txt");
-//			FileOutputStream fos = new FileOutputStream("encrypted.txt");
-//			encrypt(key, fis, fos);
-//
-//			FileInputStream fis2 = new FileInputStream("encrypted.txt");
-//			FileOutputStream fos2 = new FileOutputStream("decrypted.txt");
-//			decrypt(key, fis2, fos2);
-//		} catch (Throwable e) {
-//			e.printStackTrace();
-//		}
-	}
+//	public static void main(String[] args) {
+////		try {
+////			String key = "squirrel123"; // needs to be at least 8 characters for DES
+////
+////			FileInputStream fis = new FileInputStream("original.txt");
+////			FileOutputStream fos = new FileOutputStream("encrypted.txt");
+////			encrypt(key, fis, fos);
+////
+////			FileInputStream fis2 = new FileInputStream("encrypted.txt");
+////			FileOutputStream fos2 = new FileOutputStream("decrypted.txt");
+////			decrypt(key, fis2, fos2);
+////		} catch (Throwable e) {
+////			e.printStackTrace();
+////		}
+//	}
 
-	public static void encrypt(String key, InputStream is, OutputStream os) throws Throwable {
+	public void encrypt(String key, InputStream is, OutputStream os) throws Throwable {
 		encryptOrDecrypt(key, Cipher.ENCRYPT_MODE, is, os);
 	}
 
-	public static void decrypt(String key, InputStream is, OutputStream os) throws Throwable {
+	public void decrypt(String key, InputStream is, OutputStream os) throws Throwable {
 		encryptOrDecrypt(key, Cipher.DECRYPT_MODE, is, os);
 	}
 
@@ -74,14 +79,30 @@ public class FileEncExample5DES implements IEncryptionFramework{
 
 			FileInputStream fis = new FileInputStream(inputFile);
 			FileOutputStream fos = new FileOutputStream(encryptedFile);
-			FileEncExample5DES.encrypt(key, fis, fos);
+			encrypt(key, fis, fos);
 
 			FileInputStream fis2 = new FileInputStream(encryptedFile);
 			FileOutputStream fos2 = new FileOutputStream(decryptedFile);
-			FileEncExample5DES.decrypt(key, fis2, fos2);
+			decrypt(key, fis2, fos2);
 		} catch (Throwable e) {
 			e.printStackTrace();
 		}
+		
+	}
+
+	@Override
+	public void decryptedFile(String secretKey, String fileInputPath, String fileOutPath)
+			throws NoSuchAlgorithmException, NoSuchPaddingException, InvalidKeyException, IOException,
+			IllegalBlockSizeException, BadPaddingException {
+		// TODO Auto-generated method stub
+		
+	}
+
+	@Override
+	public void encryptedFile(String secretKey, String fileInputPath, String fileOutPath)
+			throws NoSuchAlgorithmException, NoSuchPaddingException, InvalidKeyException, IOException,
+			IllegalBlockSizeException, BadPaddingException {
+		// TODO Auto-generated method stub
 		
 	}
 
