@@ -1,10 +1,14 @@
 package examples;
 
+import java.io.BufferedInputStream;
 import java.io.FileInputStream;
+import java.io.FileNotFoundException;
 import java.io.FileOutputStream;
 import java.io.IOException;
 import java.io.InputStream;
 import java.io.OutputStream;
+import java.nio.file.Path;
+import java.nio.file.Paths;
 import java.security.InvalidKeyException;
 import java.security.NoSuchAlgorithmException;
 
@@ -80,7 +84,7 @@ public class FileEnc2 implements IEncryptionFramework, IEncryptionInterface{
 			throws NoSuchAlgorithmException, NoSuchPaddingException, InvalidKeyException, IOException,
 			IllegalBlockSizeException, BadPaddingException {
 		// TODO Auto-generated method stub
-		
+
 	}
 
 	@Override
@@ -88,7 +92,7 @@ public class FileEnc2 implements IEncryptionFramework, IEncryptionInterface{
 			throws NoSuchAlgorithmException, NoSuchPaddingException, InvalidKeyException, IOException,
 			IllegalBlockSizeException, BadPaddingException {
 		// TODO Auto-generated method stub
-		
+
 	}
 
 	@Override
@@ -98,7 +102,7 @@ public class FileEnc2 implements IEncryptionFramework, IEncryptionInterface{
 	}
 
 	@Override
-	public long runEnc(String key, String inputFile, String encryptedFile, String decryptedFile) {
+	public long runEnc(String key, String inputFile, String encryptedFile) {
 		long startTime = System.nanoTime();
 		try {
 			FileInputStream fis = new FileInputStream(inputFile);
@@ -113,7 +117,7 @@ public class FileEnc2 implements IEncryptionFramework, IEncryptionInterface{
 	}
 
 	@Override
-	public long runDec(String key, String inputFile, String encryptedFile, String decryptedFile) {
+	public long runDec(String key, String encryptedFile, String decryptedFile) {
 		long startTime = System.nanoTime();
 		try {
 			FileInputStream fis2 = new FileInputStream(encryptedFile);
@@ -125,4 +129,62 @@ public class FileEnc2 implements IEncryptionFramework, IEncryptionInterface{
 		long endTime = System.nanoTime();
 		return endTime - startTime;
 	}
+
+	@Override
+	public boolean decryptSuccess(String inputFile, String decryptedFile) {
+		try {
+
+			Path path1 = Paths.get(inputFile);
+			Path path2 = Paths.get(decryptedFile);
+			long result = filesCompareByByte(path1,path2);
+
+			return result == -1;
+
+		} catch (IOException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+
+		return false;
+	}
+	//	public boolean contentEquals(FileInputStream input1, FileInputStream input2) throws IOException
+	//	  {
+	//		input1 = new BufferedInputStream(input1);
+	//		input2 = new BufferedInputStream(input2);
+	//	    int ch = input1.read();
+	//	    while (-1 != ch)
+	//	    {
+	//	      int ch2 = input2.read();
+	//	      if (ch != ch2)
+	//	      {
+	//	        return false;
+	//	      }
+	//	      ch = input1.read();
+	//	    }
+	//
+	//	    int ch2 = input2.read();
+	//	    return (ch2 == -1);
+	//	  }
+	//	
+	public long filesCompareByByte(Path path1, Path path2) throws IOException {
+		try (BufferedInputStream fis1 = new BufferedInputStream(new FileInputStream(path1.toFile()));
+				BufferedInputStream fis2 = new BufferedInputStream(new FileInputStream(path2.toFile()))) {
+
+			int ch = 0;
+			long pos = 1;
+			while ((ch = fis1.read()) != -1) {
+				if (ch != fis2.read()) {
+					return pos;
+				}
+				pos++;
+			}
+			if (fis2.read() == -1) {
+				return -1;
+			}
+			else {
+				return pos;
+			}
+		}
+	}
+
 }

@@ -1,10 +1,13 @@
 package examples;
 
+import java.io.BufferedInputStream;
 import java.io.FileInputStream;
 import java.io.FileOutputStream;
 import java.io.IOException;
 import java.io.InputStream;
 import java.io.OutputStream;
+import java.nio.file.Path;
+import java.nio.file.Paths;
 import java.security.InvalidKeyException;
 import java.security.NoSuchAlgorithmException;
 
@@ -99,7 +102,7 @@ public class FileEnc5DES implements IEncryptionFramework, IEncryptionInterface{
 	}
 
 	@Override
-	public long runEnc(String key, String inputFile, String encryptedFile, String decryptedFile) {
+	public long runEnc(String key, String inputFile, String encryptedFile) {
 		long startTime = System.nanoTime();
 		try {
 
@@ -115,7 +118,7 @@ public class FileEnc5DES implements IEncryptionFramework, IEncryptionInterface{
 	}
 
 	@Override
-	public long runDec(String key, String inputFile, String encryptedFile, String decryptedFile) {
+	public long runDec(String key, String encryptedFile, String decryptedFile) {
 		long startTime = System.nanoTime();
 		try {
 			FileInputStream fis2 = new FileInputStream(encryptedFile);
@@ -126,6 +129,43 @@ public class FileEnc5DES implements IEncryptionFramework, IEncryptionInterface{
 		}
 		long endTime = System.nanoTime();
 		return endTime - startTime;
+	}
+	
+	public boolean decryptSuccess(String inputFile, String decryptedFile) {
+		try {
+			
+			Path path1 = Paths.get(inputFile);
+			Path path2 = Paths.get(decryptedFile);
+			long result = filesCompareByByte(path1,path2);
+			
+			return result == -1;
+			
+		} catch (IOException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		
+		return false;
+	}
+	public long filesCompareByByte(Path path1, Path path2) throws IOException {
+	    try (BufferedInputStream fis1 = new BufferedInputStream(new FileInputStream(path1.toFile()));
+	         BufferedInputStream fis2 = new BufferedInputStream(new FileInputStream(path2.toFile()))) {
+	        
+	        int ch = 0;
+	        long pos = 1;
+	        while ((ch = fis1.read()) != -1) {
+	            if (ch != fis2.read()) {
+	                return pos;
+	            }
+	            pos++;
+	        }
+	        if (fis2.read() == -1) {
+	            return -1;
+	        }
+	        else {
+	            return pos;
+	        }
+	    }
 	}
 
 }

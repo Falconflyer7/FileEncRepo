@@ -1,7 +1,5 @@
 package examples;
 
-import java.io.FileInputStream;
-import java.io.FileOutputStream;
 import java.io.IOException;
 import java.security.InvalidKeyException;
 import java.security.NoSuchAlgorithmException;
@@ -30,10 +28,13 @@ public class TestMain {
 		for (IEncryptionFramework cipher : ciphers) {
 			
 			System.out.println("Running " + cipher.encryptionType());
-			long duration = cipher.runEnc(key, "original.txt", "encrypted.txt", "decrypted.txt");
-			System.out.println("Encrypt Runtime " + duration);
-			duration = cipher.runDec(key, "original.txt", "encrypted.txt", "decrypted.txt");
-			System.out.println("Decrypt Runtime " + duration);
+			long duration = cipher.runEnc(key, "original.txt", "encrypted.txt");
+			System.out.println("Encrypt Runtime: " + duration);
+			duration = cipher.runDec(key, "encrypted.txt", "decrypted.txt");
+			System.out.println("Decrypt Runtime: " + duration);
+			boolean decryptSuccess = cipher.decryptSuccess("original.txt", "decrypted.txt");
+			System.out.println("Encrypt/decrypt success: " + decryptSuccess);
+			System.out.println();
 		}
 		
 		
