@@ -3,6 +3,8 @@ package examples;
 import java.io.BufferedInputStream;
 import java.io.FileInputStream;
 import java.io.IOException;
+import java.io.InputStream;
+import java.io.OutputStream;
 import java.nio.file.Path;
 
 public abstract class AbstractEncryptionFramework implements IEncryptionInterface, IEncryptionFramework {
@@ -28,5 +30,17 @@ public abstract class AbstractEncryptionFramework implements IEncryptionInterfac
 			}
 		}
 	}
+	
+	protected void doCopy(InputStream is, OutputStream os) throws IOException {
+		byte[] bytes = new byte[64];
+		int numBytes;
+		while ((numBytes = is.read(bytes)) != -1) {
+			os.write(bytes, 0, numBytes);
+		}
+		os.flush();
+		os.close();
+		is.close();
+	}
+
 
 }

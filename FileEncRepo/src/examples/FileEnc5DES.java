@@ -23,41 +23,28 @@ import javax.crypto.spec.DESKeySpec;
 public class FileEnc5DES extends AbstractEncryptionFramework{
 
 	public void encrypt(String key, InputStream is, OutputStream os) throws Throwable {
-		encryptOrDecrypt(key, Cipher.ENCRYPT_MODE, is, os);
-	}
-
-	public void decrypt(String key, InputStream is, OutputStream os) throws Throwable {
-		encryptOrDecrypt(key, Cipher.DECRYPT_MODE, is, os);
-	}
-
-	public static void encryptOrDecrypt(String key, int mode, InputStream is, OutputStream os) throws Throwable {
-
 		DESKeySpec dks = new DESKeySpec(key.getBytes());
 		SecretKeyFactory skf = SecretKeyFactory.getInstance("DES");
 		SecretKey desKey = skf.generateSecret(dks);
 		Cipher cipher = Cipher.getInstance("DES"); // DES/ECB/PKCS5Padding for SunJCE
 
-		if (mode == Cipher.ENCRYPT_MODE) {
-			cipher.init(Cipher.ENCRYPT_MODE, desKey);
-			CipherInputStream cis = new CipherInputStream(is, cipher);
-			doCopy(cis, os);
-		} else if (mode == Cipher.DECRYPT_MODE) {
-			cipher.init(Cipher.DECRYPT_MODE, desKey);
-			CipherOutputStream cos = new CipherOutputStream(os, cipher);
-			doCopy(is, cos);
-		}
+		cipher.init(Cipher.ENCRYPT_MODE, desKey);
+		CipherInputStream cis = new CipherInputStream(is, cipher);
+		doCopy(cis, os);
+
 	}
 
-	public static void doCopy(InputStream is, OutputStream os) throws IOException {
-		byte[] bytes = new byte[64];
-		int numBytes;
-		while ((numBytes = is.read(bytes)) != -1) {
-			os.write(bytes, 0, numBytes);
-		}
-		os.flush();
-		os.close();
-		is.close();
+	public void decrypt(String key, InputStream is, OutputStream os) throws Throwable {
+		DESKeySpec dks = new DESKeySpec(key.getBytes());
+		SecretKeyFactory skf = SecretKeyFactory.getInstance("DES");
+		SecretKey desKey = skf.generateSecret(dks);
+		Cipher cipher = Cipher.getInstance("DES"); // DES/ECB/PKCS5Padding for SunJCE
+
+		cipher.init(Cipher.DECRYPT_MODE, desKey);
+		CipherOutputStream cos = new CipherOutputStream(os, cipher);
+		doCopy(is, cos);
 	}
+
 
 	@Override
 	public long run(String key, String inputFile, String encryptedFile, String decryptedFile) {
@@ -83,7 +70,7 @@ public class FileEnc5DES extends AbstractEncryptionFramework{
 			throws NoSuchAlgorithmException, NoSuchPaddingException, InvalidKeyException, IOException,
 			IllegalBlockSizeException, BadPaddingException {
 		// TODO Auto-generated method stub
-		
+
 	}
 
 	@Override
@@ -91,7 +78,7 @@ public class FileEnc5DES extends AbstractEncryptionFramework{
 			throws NoSuchAlgorithmException, NoSuchPaddingException, InvalidKeyException, IOException,
 			IllegalBlockSizeException, BadPaddingException {
 		// TODO Auto-generated method stub
-		
+
 	}
 
 	@Override
@@ -129,21 +116,21 @@ public class FileEnc5DES extends AbstractEncryptionFramework{
 		long endTime = System.nanoTime();
 		return endTime - startTime;
 	}
-	
+
 	public boolean decryptSuccess(String inputFile, String decryptedFile) {
 		try {
-			
+
 			Path path1 = Paths.get(inputFile);
 			Path path2 = Paths.get(decryptedFile);
 			long result = filesCompareByByte(path1,path2);
-			
+
 			return result == -1;
-			
+
 		} catch (IOException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
-		
+
 		return false;
 	}
 }
