@@ -20,10 +20,10 @@ public class TestMain {
 		TestMain main = new TestMain();
 		
 		List <IEncryptionFramework> ciphers = new LinkedList<>();
-		ciphers.add(new FileEnc2());
-		ciphers.add(new FileEnc5DES());
-		ciphers.add(new FileEnc4AES());
-		
+//		ciphers.add(new FileEnc2());
+//		ciphers.add(new FileEnc5DES());
+//		ciphers.add(new FileEnc4AES());
+		ciphers.add(new CaesarCipher());
 		
 		for (IEncryptionFramework cipher : ciphers) {
 			
