@@ -11,7 +11,7 @@ import java.nio.file.Paths;
 
 public abstract class AbstractEncryptionFramework implements IEncryptionInterface, IEncryptionFramework {
 
-	
+
 	protected long filesCompareByByte(Path path1, Path path2) throws IOException {
 		try (BufferedInputStream fis1 = new BufferedInputStream(new FileInputStream(path1.toFile()));
 				BufferedInputStream fis2 = new BufferedInputStream(new FileInputStream(path2.toFile()))) {
@@ -32,7 +32,7 @@ public abstract class AbstractEncryptionFramework implements IEncryptionInterfac
 			}
 		}
 	}
-	
+
 	protected void doCopy(InputStream is, OutputStream os) throws IOException {
 		byte[] bytes = new byte[64];
 		int numBytes;
@@ -48,17 +48,38 @@ public abstract class AbstractEncryptionFramework implements IEncryptionInterfac
 	public long fileSize(String inputFile) {
 		Path path = Paths.get(inputFile);
 
-        try {
+		try {
 
-            // size of a file (in bytes)
-            long bytes = Files.size(path);
-//            System.out.println(String.format("%,d bytes", bytes));
-//            System.out.println(String.format("%,d kilobytes", bytes / 1024));
-            return bytes;
+			// size of a file (in bytes)
+			long bytes = Files.size(path);
+			//            System.out.println(String.format("%,d bytes", bytes));
+			//            System.out.println(String.format("%,d kilobytes", bytes / 1024));
+			return bytes;
 
-        } catch (IOException e) {
-            e.printStackTrace();
-        }
+		} catch (IOException e) {
+			e.printStackTrace();
+		}
 		return 0;
 	}
+
+	@Override
+	public boolean decryptSuccess(String inputFile, String decryptedFile) {
+		try {
+
+			Path path1 = Paths.get(inputFile);
+			Path path2 = Paths.get(decryptedFile);
+			long result = filesCompareByByte(path1,path2);
+
+			return result == -1;
+
+		} catch (IOException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+
+		return false;
+	}
+
+
+
 }

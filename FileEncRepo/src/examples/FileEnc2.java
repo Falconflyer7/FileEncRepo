@@ -82,7 +82,6 @@ public class FileEnc2 extends AbstractEncryptionFramework{
 
 	@Override
 	public String encryptionType() {
-		// TODO Auto-generated method stub
 		return "DES implementation 1";
 	}
 
@@ -113,24 +112,6 @@ public class FileEnc2 extends AbstractEncryptionFramework{
 		}
 		long endTime = System.nanoTime();
 		return endTime - startTime;
-	}
-
-	@Override
-	public boolean decryptSuccess(String inputFile, String decryptedFile) {
-		try {
-
-			Path path1 = Paths.get(inputFile);
-			Path path2 = Paths.get(decryptedFile);
-			long result = filesCompareByByte(path1,path2);
-
-			return result == -1;
-
-		} catch (IOException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		}
-
-		return false;
 	}
 
 }

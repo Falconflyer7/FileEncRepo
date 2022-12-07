@@ -15,7 +15,16 @@ import javax.crypto.NoSuchPaddingException;
 
 public class CaesarCipher extends AbstractEncryptionFramework {
 	public static void main(String...s){
-		
+		CaesarCipher main = new CaesarCipher();
+
+		String message = "generic message";
+		int key = 3;
+
+		//		main.encrypt(message, key);
+		//		main.decrypt(message, key);
+
+
+	}
 
 	//	private void encrypt(String message, int key) {
 	//		String encryptedMessage = "";
@@ -165,7 +174,7 @@ public class CaesarCipher extends AbstractEncryptionFramework {
 	public void encrypt(String key, InputStream is, OutputStream os) throws Throwable {
 		int size = key.length();
 		try {
-			while (is.available() != -1){
+			while (is.available() != 0){
 				char ch = (char) is.read();
 				char encryptedChar = encrypt(ch, size);
 				os.write(encryptedChar);
@@ -180,7 +189,7 @@ public class CaesarCipher extends AbstractEncryptionFramework {
 	public void decrypt(String key, InputStream is, OutputStream os) throws Throwable {
 		int size = key.length();
 		try {
-			while (is.available() != -1){
+			while (is.available() != 0){
 				char ch = (char) is.read();
 				char decryptedChar = decrypt(ch, size);
 				os.write(decryptedChar);
@@ -194,14 +203,7 @@ public class CaesarCipher extends AbstractEncryptionFramework {
 
 	@Override
 	public String encryptionType() {
-		// TODO Auto-generated method stub
-		return null;
-	}
-
-	@Override
-	public boolean decryptSuccess(String inputFile, String decryptedFile) {
-		// TODO Auto-generated method stub
-		return false;
+		return "CaesarCipher";
 	}
 
 	@Override
