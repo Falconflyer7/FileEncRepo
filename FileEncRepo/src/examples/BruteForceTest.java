@@ -1,14 +1,15 @@
 package examples;
 
+import java.io.BufferedReader;
+import java.io.File;
+import java.io.FileReader;
 import java.io.IOException;
+import java.io.RandomAccessFile;
 import java.security.InvalidKeyException;
 import java.security.NoSuchAlgorithmException;
 import java.security.spec.InvalidKeySpecException;
 import java.security.spec.KeySpec;
 import java.util.Base64;
-import java.util.LinkedList;
-import java.util.List;
-
 import javax.crypto.BadPaddingException;
 import javax.crypto.IllegalBlockSizeException;
 import javax.crypto.NoSuchPaddingException;
@@ -17,24 +18,50 @@ import javax.crypto.SecretKeyFactory;
 import javax.crypto.spec.PBEKeySpec;
 import javax.crypto.spec.SecretKeySpec;
 
-public class TestMain {
+public class BruteForceTest {
 
+	private static final String PW_PATH = "rockyou-truncated2.txt";
+	
 	public static void main(String[] args) throws InvalidKeyException, NoSuchAlgorithmException, NoSuchPaddingException, IllegalBlockSizeException, BadPaddingException, IOException {
 
-		String key = "123abc";
+		int iterations = 1;
+		String userPassword = "password1";
+ 
+		try {
+			userPassword = getRandomPassword(PW_PATH);
+			System.out.println(userPassword);
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+		createEncryptedFile(userPassword);
+		
+		BufferedReader pwBank = new BufferedReader(new FileReader(PW_PATH));
+		String pw = pwBank.readLine();
+		while (pw != null) {
+			
+			boolean results = bruteForceTry(pw);
+			if (results) {
+				System.out.println("Success after " + iterations + " number passes");
+				break;
+			}
+		
+			iterations++;
+			pw = pwBank.readLine();
+		}
+	}
 
-		List <IEncryptionFramework> ciphers = new LinkedList<>();
-		ciphers.add(new FileEnc2());
-		ciphers.add(new FileEnc5DES());
-		ciphers.add(new FileEnc4AES());
-		ciphers.add(new CaesarCipher());
+	private static void createEncryptedFile(String userPassword) {
+		IEncryptionFramework cipher = new FileEnc2();
+		System.out.println("Running " + cipher.encryptionType());
+		long duration = cipher.runEnc(hashPasswordToKey(10, userPassword), "original.txt", "encrypted.txt");
+		System.out.println("Encrypt Runtime: " + duration);
+	}
 
-		for (IEncryptionFramework cipher : ciphers) {
+	private static boolean bruteForceTry(String pw) {
+		IEncryptionFramework cipher = new FileEnc2();
 
-			System.out.println("Running " + cipher.encryptionType());
-			long duration = cipher.runEnc(hashPasswordToKey(10, key), "original.txt", "encrypted.txt");
-			System.out.println("Encrypt Runtime: " + duration);
-			duration = cipher.runDec(hashPasswordToKey(10, key), "encrypted.txt", "decrypted.txt");
+			long duration;
+			duration = cipher.runDec(hashPasswordToKey(10, pw), "encrypted.txt", "decrypted.txt");
 			System.out.println("Decrypt Runtime: " + duration);
 			boolean decryptSuccess = cipher.decryptSuccess("original.txt", "decrypted.txt");
 			System.out.println("Encrypt/decrypt success: " + decryptSuccess);
@@ -48,8 +75,9 @@ public class TestMain {
 			System.out.println(String.format("%,d bytes", bytes));
 			System.out.println(String.format("%,d kilobytes", bytes / 1024));
 			System.out.println();
+			
+			return decryptSuccess;
 
-		}
 	}
 
 	private static String hashPasswordToKey(int neededSize, String userpassword) {
@@ -62,6 +90,7 @@ public class TestMain {
 			return keyString;
 
 		} catch (NoSuchAlgorithmException | InvalidKeySpecException e) {
+		
 			e.printStackTrace();
 		}
 
@@ -87,6 +116,19 @@ public class TestMain {
 		SecretKey originalKey = new SecretKeySpec(decodedKey, 0, decodedKey.length, "AES");
 		return originalKey;
 	}
+
+	public static String getRandomPassword(String filePath) throws Exception {
+
+        File file = new File(filePath); 
+        final RandomAccessFile f = new RandomAccessFile(file, "r");
+        final long randomLocation = (long) (Math.random() * f.length());
+        f.seek(randomLocation);
+        f.readLine();
+        String randomLine = f.readLine();
+        f.close();
+        return randomLine;
+    }
+
 }
 
 
