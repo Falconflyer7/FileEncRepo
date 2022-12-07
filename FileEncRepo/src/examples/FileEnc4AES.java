@@ -6,8 +6,6 @@ import java.io.FileOutputStream;
 import java.io.IOException;
 import java.io.InputStream;
 import java.io.OutputStream;
-import java.nio.file.Path;
-import java.nio.file.Paths;
 import java.security.InvalidKeyException;
 import java.security.NoSuchAlgorithmException;
 
@@ -69,39 +67,6 @@ public class FileEnc4AES extends AbstractEncryptionFramework{
 		System.out.println("New File: " + fileOutPath);
 	}
 
-	@Override
-	public long run(String key, String inputFile, String encryptedFile, String decryptedFile) {
-		long startTime = System.nanoTime();
-		try {
-			encryptedFile(key, inputFile, encryptedFile);
-			decryptedFile(key, encryptedFile, decryptedFile);
-		} catch (InvalidKeyException | NoSuchAlgorithmException | NoSuchPaddingException | IllegalBlockSizeException
-				| BadPaddingException | IOException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		}
-		long endTime = System.nanoTime();
-		return endTime - startTime;
-
-	}
-
-	@Override
-	public void encrypt(String key, InputStream is, OutputStream os) throws Throwable {
-		// TODO Auto-generated method stub
-		
-	}
-
-	@Override
-	public void decrypt(String key, InputStream is, OutputStream os) throws Throwable {
-		// TODO Auto-generated method stub
-		
-	}
-
-	@Override
-	public String encryptionType() {
-		// TODO Auto-generated method stub
-		return "AES implementation 1";
-	}
 
 	@Override
 	public long runEnc(String key, String inputFile, String encryptedFile) {
@@ -110,7 +75,6 @@ public class FileEnc4AES extends AbstractEncryptionFramework{
 			encryptedFile(key, inputFile, encryptedFile);
 		} catch (InvalidKeyException | NoSuchAlgorithmException | NoSuchPaddingException | IllegalBlockSizeException
 				| BadPaddingException | IOException e) {
-			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
 		long endTime = System.nanoTime();
@@ -124,11 +88,27 @@ public class FileEnc4AES extends AbstractEncryptionFramework{
 			decryptedFile(key, encryptedFile, decryptedFile);
 		} catch (InvalidKeyException | NoSuchAlgorithmException | NoSuchPaddingException | IllegalBlockSizeException
 				| BadPaddingException | IOException e) {
-			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
 		long endTime = System.nanoTime();
 		return endTime - startTime;
+	}
+
+	@Override
+	public String encryptionType() {
+		return "AES implementation 1";
+	}
+
+	@Override
+	public void encrypt(String key, InputStream is, OutputStream os) throws Throwable {
+		// Unneccessary for this particular implementation
+		
+	}
+
+	@Override
+	public void decrypt(String key, InputStream is, OutputStream os) throws Throwable {
+		// Unneccessary for this particular implementation
+		
 	}
 	
 	

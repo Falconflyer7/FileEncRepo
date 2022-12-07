@@ -15,14 +15,11 @@ public class TestMain {
 	public static void main(String[] args) throws InvalidKeyException, NoSuchAlgorithmException, NoSuchPaddingException, IllegalBlockSizeException, BadPaddingException, IOException {
 
 		String key = "KeyStringWithLea";
-
-
-		TestMain main = new TestMain();
 		
 		List <IEncryptionFramework> ciphers = new LinkedList<>();
-//		ciphers.add(new FileEnc2());
-//		ciphers.add(new FileEnc5DES());
-//		ciphers.add(new FileEnc4AES());
+		ciphers.add(new FileEnc2());
+		ciphers.add(new FileEnc5DES());
+		ciphers.add(new FileEnc4AES());
 		ciphers.add(new CaesarCipher());
 		
 		for (IEncryptionFramework cipher : ciphers) {
@@ -46,7 +43,6 @@ public class TestMain {
 			System.out.println();
 
 		}
-		
 	}
 }
 

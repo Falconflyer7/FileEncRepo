@@ -5,8 +5,6 @@ import java.io.FileOutputStream;
 import java.io.IOException;
 import java.io.InputStream;
 import java.io.OutputStream;
-import java.nio.file.Path;
-import java.nio.file.Paths;
 import java.security.InvalidKeyException;
 import java.security.NoSuchAlgorithmException;
 
@@ -26,7 +24,7 @@ public class FileEnc5DES extends AbstractEncryptionFramework{
 		DESKeySpec dks = new DESKeySpec(key.getBytes());
 		SecretKeyFactory skf = SecretKeyFactory.getInstance("DES");
 		SecretKey desKey = skf.generateSecret(dks);
-		Cipher cipher = Cipher.getInstance("DES"); // DES/ECB/PKCS5Padding for SunJCE
+		Cipher cipher = Cipher.getInstance("DES");
 
 		cipher.init(Cipher.ENCRYPT_MODE, desKey);
 		CipherInputStream cis = new CipherInputStream(is, cipher);
@@ -38,53 +36,11 @@ public class FileEnc5DES extends AbstractEncryptionFramework{
 		DESKeySpec dks = new DESKeySpec(key.getBytes());
 		SecretKeyFactory skf = SecretKeyFactory.getInstance("DES");
 		SecretKey desKey = skf.generateSecret(dks);
-		Cipher cipher = Cipher.getInstance("DES"); // DES/ECB/PKCS5Padding for SunJCE
+		Cipher cipher = Cipher.getInstance("DES");
 
 		cipher.init(Cipher.DECRYPT_MODE, desKey);
 		CipherOutputStream cos = new CipherOutputStream(os, cipher);
 		doCopy(is, cos);
-	}
-
-
-	@Override
-	public long run(String key, String inputFile, String encryptedFile, String decryptedFile) {
-		long startTime = System.nanoTime();
-		try {
-
-			FileInputStream fis = new FileInputStream(inputFile);
-			FileOutputStream fos = new FileOutputStream(encryptedFile);
-			encrypt(key, fis, fos);
-
-			FileInputStream fis2 = new FileInputStream(encryptedFile);
-			FileOutputStream fos2 = new FileOutputStream(decryptedFile);
-			decrypt(key, fis2, fos2);
-		} catch (Throwable e) {
-			e.printStackTrace();
-		}
-		long endTime = System.nanoTime();
-		return endTime - startTime;
-	}
-
-	@Override
-	public void decryptedFile(String secretKey, String fileInputPath, String fileOutPath)
-			throws NoSuchAlgorithmException, NoSuchPaddingException, InvalidKeyException, IOException,
-			IllegalBlockSizeException, BadPaddingException {
-		// TODO Auto-generated method stub
-
-	}
-
-	@Override
-	public void encryptedFile(String secretKey, String fileInputPath, String fileOutPath)
-			throws NoSuchAlgorithmException, NoSuchPaddingException, InvalidKeyException, IOException,
-			IllegalBlockSizeException, BadPaddingException {
-		// TODO Auto-generated method stub
-
-	}
-
-	@Override
-	public String encryptionType() {
-		// TODO Auto-generated method stub
-		return "DES implementation 2";
 	}
 
 	@Override
@@ -115,6 +71,27 @@ public class FileEnc5DES extends AbstractEncryptionFramework{
 		}
 		long endTime = System.nanoTime();
 		return endTime - startTime;
+	}
+
+	@Override
+	public String encryptionType() {
+		return "DES implementation 2";
+	}
+
+	@Override
+	public void decryptedFile(String secretKey, String fileInputPath, String fileOutPath)
+			throws NoSuchAlgorithmException, NoSuchPaddingException, InvalidKeyException, IOException,
+			IllegalBlockSizeException, BadPaddingException {
+		// Unneccessary for this particular implementation
+	
+	}
+
+	@Override
+	public void encryptedFile(String secretKey, String fileInputPath, String fileOutPath)
+			throws NoSuchAlgorithmException, NoSuchPaddingException, InvalidKeyException, IOException,
+			IllegalBlockSizeException, BadPaddingException {
+		// Unneccessary for this particular implementation
+	
 	}
 
 }

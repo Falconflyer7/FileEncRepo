@@ -1,7 +1,6 @@
 package examples;
 
 import java.io.FileInputStream;
-import java.io.FileNotFoundException;
 import java.io.FileOutputStream;
 import java.io.IOException;
 import java.io.InputStream;
@@ -14,50 +13,7 @@ import javax.crypto.IllegalBlockSizeException;
 import javax.crypto.NoSuchPaddingException;
 
 public class CaesarCipher extends AbstractEncryptionFramework {
-	public static void main(String...s){
-		CaesarCipher main = new CaesarCipher();
-
-		String message = "generic message";
-		int key = 3;
-
-		//		main.encrypt(message, key);
-		//		main.decrypt(message, key);
-
-
-	}
-
-	//	private void encrypt(String message, int key) {
-	//		String encryptedMessage = "";
-	//		char ch;
-	//		
-	//		for(int i = 0; i < message.length(); ++i){
-	//			ch = message.charAt(i);
-	//			if(ch >= 'a' && ch <= 'z'){
-	//				ch = (char)(ch + key);
-	//
-	//				if(ch > 'z'){
-	//					ch = (char)(ch - 'z' + 'a' - 1);
-	//				}
-	//
-	//				encryptedMessage += ch;
-	//			}
-	//			else if(ch >= 'A' && ch <= 'Z'){
-	//				ch = (char)(ch + key);
-	//
-	//				if(ch > 'Z'){
-	//					ch = (char)(ch - 'Z' + 'A' - 1);
-	//				}
-	//
-	//				encryptedMessage += ch;
-	//			}
-	//			else {
-	//				encryptedMessage += ch;
-	//			}
-	//		}
-	//		
-	//		System.out.println("Encrypted Message = " + encryptedMessage);
-	//	}
-
+	
 	private char encrypt(char ch, int key) {
 
 		if(ch >= 'a' && ch <= 'z'){
@@ -82,38 +38,6 @@ public class CaesarCipher extends AbstractEncryptionFramework {
 			return ch;
 		}
 	}
-
-	//	private void decrypt(String message, int key) {
-	//		String decryptedMessage = "";
-	//		char ch;
-	//
-	//		for(int i = 0; i < message.length(); ++i){
-	//			ch = message.charAt(i);
-	//			if(ch >= 'a' && ch <= 'z'){
-	//				ch = (char)(ch - key);
-	//
-	//				if(ch < 'a'){
-	//					ch = (char)(ch + 'z' - 'a' + 1);
-	//				}
-	//
-	//				decryptedMessage += ch;
-	//			}
-	//			else if(ch >= 'A' && ch <= 'Z'){
-	//				ch = (char)(ch - key);
-	//
-	//				if(ch < 'A'){
-	//					ch = (char)(ch + 'Z' - 'A' + 1);
-	//				}
-	//
-	//				decryptedMessage += ch;
-	//			}
-	//			else {
-	//				decryptedMessage += ch;
-	//			}
-	//		}
-	//
-	//		System.out.println("Decrypted Message = " + decryptedMessage);
-	//	}
 
 	private char decrypt(char ch, int key) {
 
@@ -140,8 +64,7 @@ public class CaesarCipher extends AbstractEncryptionFramework {
 		}
 	}
 
-
-
+	@Override
 	public long runEnc(String key, String inputFile, String encryptedFile) {
 		long startTime = System.nanoTime();
 		try {
@@ -180,7 +103,6 @@ public class CaesarCipher extends AbstractEncryptionFramework {
 				os.write(encryptedChar);
 			}
 		} catch (IOException e) {
-			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
 	}
@@ -195,10 +117,8 @@ public class CaesarCipher extends AbstractEncryptionFramework {
 				os.write(decryptedChar);
 			}
 		} catch (IOException e) {
-			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
-		
 	}
 
 	@Override
@@ -207,24 +127,16 @@ public class CaesarCipher extends AbstractEncryptionFramework {
 	}
 
 	@Override
-	public long run(String key, String inputFile, String encryptedFile, String decryptedFile) {
-		// TODO Auto-generated method stub
-		return 0;
-	}
-
-	@Override
 	public void decryptedFile(String secretKey, String fileInputPath, String fileOutPath)
 			throws NoSuchAlgorithmException, NoSuchPaddingException, InvalidKeyException, IOException,
 			IllegalBlockSizeException, BadPaddingException {
-		// TODO Auto-generated method stub
-		
+		// Unneccessary for this particular implementation
 	}
 
 	@Override
 	public void encryptedFile(String secretKey, String fileInputPath, String fileOutPath)
 			throws NoSuchAlgorithmException, NoSuchPaddingException, InvalidKeyException, IOException,
 			IllegalBlockSizeException, BadPaddingException {
-		// TODO Auto-generated method stub
-		
+		// Unneccessary for this particular implementation
 	}
 }
