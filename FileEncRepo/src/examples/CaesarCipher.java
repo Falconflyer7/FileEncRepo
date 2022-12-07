@@ -3,6 +3,7 @@ package examples;
 import java.io.FileInputStream;
 import java.io.FileNotFoundException;
 import java.io.FileOutputStream;
+import java.io.IOException;
 
 public class CaesarCipher {
 	public static void main(String...s){
@@ -11,8 +12,10 @@ public class CaesarCipher {
 		String message = "generic message";
 		int key = 3;
 		
-		main.encrypt(message, key);
-		main.decrypt(message, key);
+//		main.encrypt(message, key);
+//		main.decrypt(message, key);
+		
+		
 	}
 	
 	private void encrypt(String message, int key) {
@@ -45,6 +48,31 @@ public class CaesarCipher {
 		}
 		
 		System.out.println("Encrypted Message = " + encryptedMessage);
+	}
+	
+	private char encrypt(char ch, int key) {
+		
+			if(ch >= 'a' && ch <= 'z'){
+				ch = (char)(ch + key);
+
+				if(ch > 'z'){
+					ch = (char)(ch - 'z' + 'a' - 1);
+				}
+
+				return ch;
+			}
+			else if(ch >= 'A' && ch <= 'Z'){
+				ch = (char)(ch + key);
+
+				if(ch > 'Z'){
+					ch = (char)(ch - 'Z' + 'A' - 1);
+				}
+
+				return ch;
+			}
+			else {
+				return ch;
+			}
 	}
 	
 	private void decrypt(String message, int key) {
@@ -94,7 +122,17 @@ public class CaesarCipher {
 	}
 
 	private void encrypt(String key, FileInputStream fis, FileOutputStream fos) {
-		// TODO Auto-generated method stub
 		
+		int size = key.length();
+		try {
+			while (fis.available() != -1){
+				char ch = (char) fis.read();
+				char encryptedChar = encrypt(ch, size);
+				fos.write(encryptedChar);
+			}
+		} catch (IOException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
 	}
 }
