@@ -25,9 +25,9 @@ public class TestMain {
 		for (IEncryptionFramework cipher : ciphers) {
 			
 			System.out.println("Running " + cipher.encryptionType());
-			long duration = cipher.runEnc(key, "original.txt", "encrypted.txt");
+			long duration = cipher.runEnc(getPassword(10, key), "original.txt", "encrypted.txt");
 			System.out.println("Encrypt Runtime: " + duration);
-			duration = cipher.runDec(key, "encrypted.txt", "decrypted.txt");
+			duration = cipher.runDec(getPassword(10, key), "encrypted.txt", "decrypted.txt");
 			System.out.println("Decrypt Runtime: " + duration);
 			boolean decryptSuccess = cipher.decryptSuccess("original.txt", "decrypted.txt");
 			System.out.println("Encrypt/decrypt success: " + decryptSuccess);
@@ -43,6 +43,14 @@ public class TestMain {
 			System.out.println();
 
 		}
+	}
+	
+	private static String getPassword(int neededSize, String passwordSeed) {
+		
+		//TODO Handle variable password inputs
+		//passwords need to be hashed to given key specification byte lengths
+		
+		return passwordSeed;
 	}
 }
 
