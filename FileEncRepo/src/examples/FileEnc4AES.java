@@ -110,6 +110,11 @@ public class FileEnc4AES extends AbstractEncryptionFramework{
 		// Unneccessary for this particular implementation
 		
 	}
+
+	@Override
+	public String getAlgorithmType() {
+		return "AES";
+	}
 	
 	
 }

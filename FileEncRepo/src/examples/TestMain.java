@@ -14,6 +14,7 @@ import javax.crypto.IllegalBlockSizeException;
 import javax.crypto.NoSuchPaddingException;
 import javax.crypto.SecretKey;
 import javax.crypto.SecretKeyFactory;
+import javax.crypto.spec.DESedeKeySpec;
 import javax.crypto.spec.PBEKeySpec;
 import javax.crypto.spec.SecretKeySpec;
 
@@ -21,20 +22,21 @@ public class TestMain {
 
 	public static void main(String[] args) throws InvalidKeyException, NoSuchAlgorithmException, NoSuchPaddingException, IllegalBlockSizeException, BadPaddingException, IOException {
 
-		String key = "123abc";
+		String key = "123abc123abc123abc123abc";
 
 		List <IEncryptionFramework> ciphers = new LinkedList<>();
-		ciphers.add(new FileEnc2());
+//		ciphers.add(new FileEnc2());
 		ciphers.add(new FileEnc5DES());
-		ciphers.add(new FileEnc4AES());
-		ciphers.add(new CaesarCipher());
+//		ciphers.add(new FileEnc4AES());
+//		ciphers.add(new CaesarCipher());
 
 		for (IEncryptionFramework cipher : ciphers) {
 
 			System.out.println("Running " + cipher.encryptionType());
-			long duration = cipher.runEnc(hashPasswordToKey(10, key), "original.txt", "encrypted.txt");
+			String algorithmType = cipher.getAlgorithmType();
+			long duration = cipher.runEnc(hashPasswordToKey(algorithmType, key), "original.txt", "encrypted.txt");
 			System.out.println("Encrypt Runtime: " + duration);
-			duration = cipher.runDec(hashPasswordToKey(10, key), "encrypted.txt", "decrypted.txt");
+			duration = cipher.runDec(hashPasswordToKey(algorithmType, key), "encrypted.txt", "decrypted.txt");
 			System.out.println("Decrypt Runtime: " + duration);
 			boolean decryptSuccess = cipher.decryptSuccess("original.txt", "decrypted.txt");
 			System.out.println("Encrypt/decrypt success: " + decryptSuccess);
@@ -52,10 +54,10 @@ public class TestMain {
 		}
 	}
 
-	private static String hashPasswordToKey(int neededSize, String userpassword) {
+	private static String hashPasswordToKey(String algorithmType, String userpassword) {
 
 		try {
-			SecretKey secretKey = getKeyFromPassword(userpassword, "GenericSalt");
+			SecretKey secretKey = getKeyFromPassword(userpassword, "GenericSalt", algorithmType);
 			
 			String keyString = convertSecretKeyToString(secretKey);
 			System.out.println(keyString);
@@ -68,13 +70,57 @@ public class TestMain {
 		return userpassword;
 	}
 
-	public static SecretKey getKeyFromPassword(String password, String salt)
+	public static SecretKey getKeyFromPassword(String password, String salt, String algorithmType)
+			throws NoSuchAlgorithmException, InvalidKeySpecException {
+		
+		if (algorithmType.equalsIgnoreCase("DESede")) {
+			return getDESedeKeyFromPassword(password, salt);
+		} else {
+			return getAESKeyFromPassword(password, salt);
+		}
+		
+		
+		
+//		password = "123abc123abc123abc123abc";
+//		DESedeKeySpec spec;
+//		try {
+//			spec = new DESedeKeySpec(password.getBytes());
+//			SecretKeyFactory factory = SecretKeyFactory.getInstance("DESede");
+//			SecretKey originalKey = factory.generateSecret(spec);
+////			SecretKey originalKey = new SecretKeySpec(factory.generateSecret(spec).getEncoded(), "DESede");
+//			return originalKey;
+//		} catch (InvalidKeyException e) {
+//			// TODO Auto-generated catch block
+//			e.printStackTrace();
+//		}
+//		return null;
+	}
+	
+	public static SecretKey getDESedeKeyFromPassword(String password, String salt)
+			throws NoSuchAlgorithmException, InvalidKeySpecException {
+//		password = "123abc123abc123abc123abc";
+		DESedeKeySpec spec;
+		try {
+			spec = new DESedeKeySpec(password.getBytes());
+			SecretKeyFactory factory = SecretKeyFactory.getInstance("DESede");
+			SecretKey originalKey = factory.generateSecret(spec);
+//			SecretKey originalKey = new SecretKeySpec(factory.generateSecret(spec).getEncoded(), "DESede");
+			return originalKey;
+		} catch (InvalidKeyException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		return null;
+	}
+	
+	public static SecretKey getAESKeyFromPassword(String password, String salt)
 			throws NoSuchAlgorithmException, InvalidKeySpecException {
 		SecretKeyFactory factory = SecretKeyFactory.getInstance("PBKDF2WithHmacSHA256");
 		KeySpec spec = new PBEKeySpec(password.toCharArray(), salt.getBytes(), 65536, 128);
 		SecretKey originalKey = new SecretKeySpec(factory.generateSecret(spec).getEncoded(), "AES");
 		return originalKey;
 	}
+
 	
 	public static String convertSecretKeyToString(SecretKey secretKey) throws NoSuchAlgorithmException {
 		byte[] rawData = secretKey.getEncoded();

@@ -93,4 +93,9 @@ public class FileEnc2 extends AbstractEncryptionFramework{
 	
 	}
 
+	@Override
+	public String getAlgorithmType() {
+		return "DES";
+	}
+
 }

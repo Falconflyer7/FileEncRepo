@@ -139,4 +139,9 @@ public class CaesarCipher extends AbstractEncryptionFramework {
 			IllegalBlockSizeException, BadPaddingException {
 		// Unneccessary for this particular implementation
 	}
+
+	@Override
+	public String getAlgorithmType() {
+		return "Caesar";
+	}
 }

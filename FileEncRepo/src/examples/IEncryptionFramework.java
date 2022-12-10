@@ -7,6 +7,8 @@ public interface IEncryptionFramework {
 	
 	
 	String encryptionType();
+	
+	String getAlgorithmType();
 
 	boolean decryptSuccess (String inputFile, String decryptedFile);
 	long fileSize(String inputFile);
