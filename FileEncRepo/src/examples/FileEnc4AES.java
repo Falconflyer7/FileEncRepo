@@ -63,7 +63,7 @@ public class FileEnc4AES extends AbstractEncryptionFramework{
 
 
 	@Override
-	public long runEnc(String key, String inputFile, String encryptedFile) {
+	public long runEncrypt(String key, String inputFile, String encryptedFile) {
 		long startTime = System.nanoTime();
 		try {
 			encryptedFile(key, inputFile, encryptedFile);
@@ -76,7 +76,7 @@ public class FileEnc4AES extends AbstractEncryptionFramework{
 	}
 
 	@Override
-	public long runDec(String key, String encryptedFile, String decryptedFile) {
+	public long runDecrypt(String key, String encryptedFile, String decryptedFile) {
 		long startTime = System.nanoTime();
 		try {
 			decryptedFile(key, encryptedFile, decryptedFile);
@@ -89,8 +89,8 @@ public class FileEnc4AES extends AbstractEncryptionFramework{
 	}
 
 	@Override
-	public String encryptionType() {
-		return "AES implementation 1";
+	public String getAlgorithmDescription() {
+		return "AES implementation";
 	}
 
 	@Override

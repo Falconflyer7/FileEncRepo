@@ -52,8 +52,8 @@ public class BruteForceTest {
 
 	private static void createEncryptedFile(String userPassword) {
 		IEncryptionFramework cipher = new FileEnc2();
-		System.out.println("Running " + cipher.encryptionType());
-		long duration = cipher.runEnc(hashPasswordToKey(10, userPassword), "original.txt", "encrypted.txt");
+		System.out.println("Running " + cipher.getAlgorithmDescription());
+		long duration = cipher.runEncrypt(hashPasswordToKey(10, userPassword), "original.txt", "encrypted.txt");
 		System.out.println("Encrypt Runtime: " + duration);
 	}
 
@@ -61,7 +61,7 @@ public class BruteForceTest {
 		IEncryptionFramework cipher = new FileEnc2();
 
 			long duration;
-			duration = cipher.runDec(hashPasswordToKey(10, pw), "encrypted.txt", "decrypted.txt");
+			duration = cipher.runDecrypt(hashPasswordToKey(10, pw), "encrypted.txt", "decrypted.txt");
 			System.out.println("Decrypt Runtime: " + duration);
 			boolean decryptSuccess = cipher.decryptSuccess("original.txt", "decrypted.txt");
 			System.out.println("Encrypt/decrypt success: " + decryptSuccess);

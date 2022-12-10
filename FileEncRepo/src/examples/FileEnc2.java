@@ -44,7 +44,7 @@ public class FileEnc2 extends AbstractEncryptionFramework{
 	}
 
 	@Override
-	public long runEnc(String key, String inputFile, String encryptedFile) {
+	public long runEncrypt(String key, String inputFile, String encryptedFile) {
 		long startTime = System.nanoTime();
 		try {
 			FileInputStream fis = new FileInputStream(inputFile);
@@ -59,7 +59,7 @@ public class FileEnc2 extends AbstractEncryptionFramework{
 	}
 
 	@Override
-	public long runDec(String key, String encryptedFile, String decryptedFile) {
+	public long runDecrypt(String key, String encryptedFile, String decryptedFile) {
 		long startTime = System.nanoTime();
 		try {
 			FileInputStream fis2 = new FileInputStream(encryptedFile);
@@ -73,7 +73,7 @@ public class FileEnc2 extends AbstractEncryptionFramework{
 	}
 
 	@Override
-	public String encryptionType() {
+	public String getAlgorithmDescription() {
 		return "DES implementation";
 	}
 

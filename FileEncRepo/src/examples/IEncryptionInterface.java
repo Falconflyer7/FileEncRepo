@@ -10,6 +10,12 @@ import javax.crypto.BadPaddingException;
 import javax.crypto.IllegalBlockSizeException;
 import javax.crypto.NoSuchPaddingException;
 
+/**
+ * Encryption Interface
+ * Standardizes encryption calls across all implemented algorithms
+ * @author Mark Fish
+ *
+ */
 public interface IEncryptionInterface {
 
 	void encrypt(String key, InputStream is, OutputStream os) throws Throwable;

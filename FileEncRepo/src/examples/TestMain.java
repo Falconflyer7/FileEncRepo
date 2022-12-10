@@ -32,11 +32,11 @@ public class TestMain {
 
 		for (IEncryptionFramework cipher : ciphers) {
 
-			System.out.println("Running " + cipher.encryptionType());
+			System.out.println("Running " + cipher.getAlgorithmDescription());
 			String algorithmType = cipher.getAlgorithmType();
-			long duration = cipher.runEnc(hashPasswordToKey(algorithmType, key), "original.txt", "encrypted.txt");
+			long duration = cipher.runEncrypt(hashPasswordToKey(algorithmType, key), "original.txt", "encrypted.txt");
 			System.out.println("Encrypt Runtime: " + duration/1000 + " microseconds");
-			duration = cipher.runDec(hashPasswordToKey(algorithmType, key), "encrypted.txt", "decrypted.txt");
+			duration = cipher.runDecrypt(hashPasswordToKey(algorithmType, key), "encrypted.txt", "decrypted.txt");
 			System.out.println("Decrypt Runtime: " + duration/1000 + " microseconds");
 			boolean decryptSuccess = cipher.decryptSuccess("original.txt", "decrypted.txt");
 			System.out.println("Encrypt/decrypt success: " + decryptSuccess);

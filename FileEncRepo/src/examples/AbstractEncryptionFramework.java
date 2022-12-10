@@ -9,6 +9,12 @@ import java.nio.file.Files;
 import java.nio.file.Path;
 import java.nio.file.Paths;
 
+/**
+ * Abstract parent class
+ * Framework for some basic universal methods needed across multiple subclasses
+ * @author Mark Fish
+ *
+ */
 public abstract class AbstractEncryptionFramework implements IEncryptionInterface, IEncryptionFramework {
 
 
@@ -52,13 +58,12 @@ public abstract class AbstractEncryptionFramework implements IEncryptionInterfac
 
 			// size of a file (in bytes)
 			long bytes = Files.size(path);
-			//            System.out.println(String.format("%,d bytes", bytes));
-			//            System.out.println(String.format("%,d kilobytes", bytes / 1024));
 			return bytes;
 
 		} catch (IOException e) {
 			e.printStackTrace();
 		}
+		
 		return 0;
 	}
 
@@ -75,10 +80,7 @@ public abstract class AbstractEncryptionFramework implements IEncryptionInterfac
 		} catch (IOException e) {
 			e.printStackTrace();
 		}
-
+		
 		return false;
 	}
-
-
-
 }
