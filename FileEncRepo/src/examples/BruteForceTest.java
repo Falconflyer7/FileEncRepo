@@ -25,7 +25,7 @@ public class BruteForceTest {
 	public static void main(String[] args) throws InvalidKeyException, NoSuchAlgorithmException, NoSuchPaddingException, IllegalBlockSizeException, BadPaddingException, IOException {
 
 		int iterations = 1;
-		String userPassword = "password1";
+		String userPassword = null;
  
 		try {
 			userPassword = getRandomPassword(PW_PATH);
@@ -41,7 +41,7 @@ public class BruteForceTest {
 			
 			boolean results = bruteForceTry(pw);
 			if (results) {
-				System.out.println("Success after " + iterations + " number passes");
+				System.out.println("Success after " + iterations + " attack passes");
 				break;
 			}
 		
@@ -54,7 +54,7 @@ public class BruteForceTest {
 		IEncryptionFramework cipher = new FileEnc2();
 		System.out.println("Running " + cipher.getAlgorithmDescription());
 		long duration = cipher.runEncrypt(hashPasswordToKey(10, userPassword), "original.txt", "encrypted.txt");
-		System.out.println("Encrypt Runtime: " + duration);
+		System.out.println("Encrypt Runtime: " + duration/1000 + " microseconds");
 	}
 
 	private static boolean bruteForceTry(String pw) {
@@ -62,7 +62,7 @@ public class BruteForceTest {
 
 			long duration;
 			duration = cipher.runDecrypt(hashPasswordToKey(10, pw), "encrypted.txt", "decrypted.txt");
-			System.out.println("Decrypt Runtime: " + duration);
+			System.out.println("Decrypt Runtime: " + duration/1000 + " microseconds");
 			boolean decryptSuccess = cipher.decryptSuccess("original.txt", "decrypted.txt");
 			System.out.println("Encrypt/decrypt success: " + decryptSuccess);
 
