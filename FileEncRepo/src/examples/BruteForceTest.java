@@ -29,7 +29,7 @@ public class BruteForceTest {
  
 		try {
 			userPassword = getRandomPassword(PW_PATH);
-			System.out.println(userPassword);
+			System.out.println("Password used to encrypt: " + userPassword);
 		} catch (Exception e) {
 			e.printStackTrace();
 		}
