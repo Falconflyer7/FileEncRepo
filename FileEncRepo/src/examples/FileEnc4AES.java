@@ -37,9 +37,6 @@ public class FileEnc4AES extends AbstractEncryptionFramework{
 
 		inputStream.close();
 		outputStream.close();
-
-//		System.out.println("File successfully encrypted!");
-//		System.out.println("New File: " + fileOutPath);
 	}
 
 	public void decryptedFile(String secretKey, String fileInputPath, String fileOutPath)
@@ -62,9 +59,6 @@ public class FileEnc4AES extends AbstractEncryptionFramework{
 
 		inputStream.close();
 		outputStream.close();
-
-//		System.out.println("File successfully decrypted!");
-//		System.out.println("New File: " + fileOutPath);
 	}
 
 

@@ -74,7 +74,7 @@ public class FileEnc2 extends AbstractEncryptionFramework{
 
 	@Override
 	public String encryptionType() {
-		return "DES implementation 1";
+		return "DES implementation";
 	}
 
 	@Override

@@ -25,19 +25,19 @@ public class TestMain {
 		String key = "123abc123abc123abc123abc";
 
 		List <IEncryptionFramework> ciphers = new LinkedList<>();
-//		ciphers.add(new FileEnc2());
+		ciphers.add(new FileEnc2());
 		ciphers.add(new FileEnc5DES());
-//		ciphers.add(new FileEnc4AES());
-//		ciphers.add(new CaesarCipher());
+		ciphers.add(new FileEnc4AES());
+		ciphers.add(new CaesarCipher());
 
 		for (IEncryptionFramework cipher : ciphers) {
 
 			System.out.println("Running " + cipher.encryptionType());
 			String algorithmType = cipher.getAlgorithmType();
 			long duration = cipher.runEnc(hashPasswordToKey(algorithmType, key), "original.txt", "encrypted.txt");
-			System.out.println("Encrypt Runtime: " + duration);
+			System.out.println("Encrypt Runtime: " + duration/1000 + " microseconds");
 			duration = cipher.runDec(hashPasswordToKey(algorithmType, key), "encrypted.txt", "decrypted.txt");
-			System.out.println("Decrypt Runtime: " + duration);
+			System.out.println("Decrypt Runtime: " + duration/1000 + " microseconds");
 			boolean decryptSuccess = cipher.decryptSuccess("original.txt", "decrypted.txt");
 			System.out.println("Encrypt/decrypt success: " + decryptSuccess);
 
@@ -50,7 +50,6 @@ public class TestMain {
 			System.out.println(String.format("%,d bytes", bytes));
 			System.out.println(String.format("%,d kilobytes", bytes / 1024));
 			System.out.println();
-
 		}
 	}
 
@@ -78,36 +77,17 @@ public class TestMain {
 		} else {
 			return getAESKeyFromPassword(password, salt);
 		}
-		
-		
-		
-//		password = "123abc123abc123abc123abc";
-//		DESedeKeySpec spec;
-//		try {
-//			spec = new DESedeKeySpec(password.getBytes());
-//			SecretKeyFactory factory = SecretKeyFactory.getInstance("DESede");
-//			SecretKey originalKey = factory.generateSecret(spec);
-////			SecretKey originalKey = new SecretKeySpec(factory.generateSecret(spec).getEncoded(), "DESede");
-//			return originalKey;
-//		} catch (InvalidKeyException e) {
-//			// TODO Auto-generated catch block
-//			e.printStackTrace();
-//		}
-//		return null;
 	}
 	
 	public static SecretKey getDESedeKeyFromPassword(String password, String salt)
 			throws NoSuchAlgorithmException, InvalidKeySpecException {
-//		password = "123abc123abc123abc123abc";
 		DESedeKeySpec spec;
 		try {
 			spec = new DESedeKeySpec(password.getBytes());
 			SecretKeyFactory factory = SecretKeyFactory.getInstance("DESede");
 			SecretKey originalKey = factory.generateSecret(spec);
-//			SecretKey originalKey = new SecretKeySpec(factory.generateSecret(spec).getEncoded(), "DESede");
 			return originalKey;
 		} catch (InvalidKeyException e) {
-			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
 		return null;
@@ -121,7 +101,6 @@ public class TestMain {
 		return originalKey;
 	}
 
-	
 	public static String convertSecretKeyToString(SecretKey secretKey) throws NoSuchAlgorithmException {
 		byte[] rawData = secretKey.getEncoded();
 		String encodedKey = Base64.getEncoder().encodeToString(rawData);
