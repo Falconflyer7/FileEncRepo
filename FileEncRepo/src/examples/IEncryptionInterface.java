@@ -21,7 +21,9 @@ public interface IEncryptionInterface {
 	void encrypt(String key, InputStream is, OutputStream os) throws Throwable;
 	void decrypt(String key, InputStream is, OutputStream os) throws Throwable;
 
-	void decryptedFile(String secretKey, String fileInputPath, String fileOutPath) throws NoSuchAlgorithmException, NoSuchPaddingException, InvalidKeyException, IOException, IllegalBlockSizeException, BadPaddingException;
+	void decryptedFile(String secretKey, String fileInputPath, String fileOutPath)
+			throws NoSuchAlgorithmException, NoSuchPaddingException, InvalidKeyException,
+			IOException, IllegalBlockSizeException, BadPaddingException;
 	void encryptedFile(String secretKey, String fileInputPath, String fileOutPath)
 			throws NoSuchAlgorithmException, NoSuchPaddingException, InvalidKeyException, IOException,
 			IllegalBlockSizeException, BadPaddingException; 
